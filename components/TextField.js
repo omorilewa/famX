@@ -1,34 +1,28 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
+import PropTypes from 'prop-types';
+import { textfieldStyles as styles } from '../styles/';
 
-export default TextField = ({
+export const TextField = ({
   placeholder,
   value,
   secureTextEntry,
-  keyboardType }) => (
+  keyboardType
+}) => (
     <TextInput
       style={styles.inputStyle}
       placeholder={placeholder}
       value={value}
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
-      underlineColorAndroid='transparent'
-    >
-    </TextInput>
-)
+      underlineColorAndroid="transparent"
+     />
+);
 
-const styles = StyleSheet.create({
-  inputStyle: {
-    height: '7%',
-    borderColor: 'gray',
-    borderWidth: 2,
-    width: '95%',
-    backgroundColor: 'white',
-    padding: 10,
-    marginTop: '4%',
-    fontSize: 14,
-    borderRadius: 5,
-    borderWidth: 0
-  }
-});
 
+TextField.propTypes = {
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  secureTextEntry: PropTypes.bool,
+  keyboardType: PropTypes.enum
+};
