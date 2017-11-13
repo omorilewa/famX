@@ -24,9 +24,6 @@ export default class SignupPage extends React.Component {
       PhoneNo: ''
     };
   }
-  handleInput = (fieldName) => {
-    this.setState({ fieldName });
-  }
 
   render() {
     return (
