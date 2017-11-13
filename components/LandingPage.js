@@ -1,31 +1,33 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-
+import PropTypes from 'prop-types';
+import { Text, View, TouchableHighlight } from 'react-native';
+import { landingStyles as styles } from '../styles';
 
 export default class LandingPage extends React.Component {
   static navigationOptions = {
     title: 'FAMX',
   };
-  render() {
+
+  static propTypes = {
+    navigate: PropTypes.func,
+    navigation: PropTypes.object
+  };
+
+  handlePress = () => {
     const { navigate } = this.props.navigation;
+    navigate('SignUpPage');
+  }
+
+
+  render() {
     return (
       <View style={styles.container}>
         <TouchableHighlight
-          onPress={() =>
-            navigate('SignUpPage')
-          }
+          onPress={this.handlePress}
           style={styles.create}
         >
           <Text style={styles.buttonText}>
             SIGN UP
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.logWord}
-          style={[styles.create, { backgroundColor: 'grey'}]}
-        >
-          <Text style={styles.buttonText}>
-            SIGN IN
           </Text>
         </TouchableHighlight>
       </View>
@@ -33,32 +35,3 @@ export default class LandingPage extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    flex: 1,
-    backgroundColor: '#B7C4AA',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  create: {
-    height: 45,
-    backgroundColor: 'black',
-    marginBottom: 15,
-    borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 250
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#fafafa',
-    fontWeight: '300',
-    fontSize: 16
-  },
-  stretch: {
-    width: 250,
-    height: 200,
-    marginBottom: 20
-  }
-});
