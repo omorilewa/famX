@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, TouchableHighlight } from 'react-native';
-import { landingStyles as styles } from '../src/styles';
+import { landingStyles as styles } from '../styles';
 
 export default class LandingPage extends React.Component {
   static navigationOptions = {
