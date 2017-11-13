@@ -3,7 +3,7 @@ import { TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import { textfieldStyles as styles } from '../styles';
 
-export const TextField = ({
+const TextField = ({
   placeholder,
   value,
   secureTextEntry,
@@ -19,10 +19,11 @@ export const TextField = ({
      />
 );
 
-
 TextField.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   secureTextEntry: PropTypes.bool,
-  keyboardType: PropTypes.enum
+  keyboardType: PropTypes.oneOf(['email-address', 'phone-pad'])
 };
+
+export default TextField;
