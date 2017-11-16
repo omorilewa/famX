@@ -34,9 +34,9 @@ export const signupStyles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
-    backgroundColor: '#B7C4AA',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
   },
   imageStyle: {
     height: '15%',
@@ -46,25 +46,43 @@ export const signupStyles = StyleSheet.create({
   },
   buttonStyle: {
     height: '7%',
-    backgroundColor: '#4b5320',
+    backgroundColor: '#b24f60',
+    // backgroundColor: '#4b5320', - should we need to revert to former colour
     marginTop: '9%',
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: 250
+  },
+  Icon: {
+    padding: 10,
+  },
+  linkStyle: {
+    color: '#670A0A',
+    fontWeight: 'bold'
+  },
+  divider: {
+    color: 'lightgray',
+    marginTop: '3%',
+    marginBottom: '3%'
+  },
+  labelStyle: {
+    fontWeight: 'bold',
+    fontSize: 13
   }
 });
 
 export const textfieldStyles = StyleSheet.create({
   inputStyle: {
-    height: '7%',
-    borderColor: 'gray',
-    borderWidth: 2,
-    width: '95%',
+    height: '5%',
+    borderColor: 'lightgray',
+    width: '90%',
     backgroundColor: 'white',
-    padding: 10,
-    marginTop: '4%',
-    fontSize: 14,
-    borderRadius: 5,
+    borderWidth: 0.5,
+    minHeight: 23
+  },
+  input: {
+    minHeight: 23,
+    fontSize: 10
   }
 });
