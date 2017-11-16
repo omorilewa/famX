@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormInput } from 'react-native-elements';
 import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { textfieldStyles as styles } from '../styles';
 
 const RenderInput = ({
@@ -11,15 +12,25 @@ const RenderInput = ({
   meta: { touched, error },
   input: { onChange, ...restInput }
 }) =>
-  <View>
+  <View style={styles.viewStyle}>
     <FormInput
-      containerStyle={styles.inputStyle}
+      containerStyle={(touched && error) ?
+        [styles.containerStyle, styles.errorStyle] : styles.containerStyle}
+      inputStyle={styles.inputStyle}
       onChangeText={onChange}
       {...restInput}
       placeholder={placeholder}
       keyboardType={keyboardType}
-      secureTextEntry={secureTextEntry} />
-    <Text>{touched && (error && <Text>{ error}</Text>)}</Text>
+      secureTextEntry={secureTextEntry}
+      underlineColorAndroid='transparent'
+     />
+    <View>{touched && (error &&
+        <View style={styles.errorView}>
+          <Icon name="exclamation-circle" size={14} color="red"/>
+          <Text style={styles.errorText}>{ error}</Text>
+        </View>
+         )}
+    </View>
   </View>;
 
 RenderInput.propTypes = {

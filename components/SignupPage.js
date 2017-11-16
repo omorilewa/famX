@@ -34,9 +34,13 @@ const validate = (values) => {
   }
   if (!values.password) {
     errors.password = 'Password is required';
+  } else if (values.password.length < 6) {
+    errors.password = 'Password must be more than 6 characters';
   }
   if (!values.passwordConfirm) {
     errors.passwordConfirm = 'Confirm Password is required';
+  } else if (values.password !== values.passwordConfirm) {
+    errors.passwordConfirm = 'Passwords do not match';
   }
   if (!values.phoneNum) {
     errors.phoneNum = 'Phone Number is required';
@@ -89,14 +93,9 @@ class SignupPage extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 16, color: 'gray' }}>
-           Sign up with
-          <Text style={styles.linkStyle}>
-           Facebook
-          </Text>
+           Sign up with<Text style={styles.linkStyle}> Facebook </Text>
            or
-          <Text style={styles.linkStyle}>
-              Google
-          </Text>
+          <Text style={styles.linkStyle}> Google</Text>
         </Text>
         <Text style={styles.divider}>
                ____________________  or  _____________________

@@ -73,16 +73,34 @@ export const signupStyles = StyleSheet.create({
 });
 
 export const textfieldStyles = StyleSheet.create({
-  inputStyle: {
-    height: '5%',
-    borderColor: 'lightgray',
+  viewStyle: {
     width: '90%',
+  },
+  containerStyle: {
+    height: '6%',
+    borderColor: 'lightgray',
     backgroundColor: 'white',
     borderWidth: 0.5,
-    minHeight: 23
+    minHeight: 26,
+    marginLeft: 0,
+    marginRight: 0
   },
-  input: {
+  inputStyle: {
     minHeight: 23,
-    fontSize: 10
+    fontSize: 10,
+    width: '100%'
+  },
+  errorStyle: {
+    borderColor: 'red',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  errorView: {
+    justifyContent: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row'
   }
 });
