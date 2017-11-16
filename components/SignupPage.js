@@ -1,16 +1,49 @@
+
 import React from 'react';
+import lodash from 'lodash';
 import {
   Text,
   View,
-  Image,
   TouchableHighlight
 } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { FormLabel } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import TextField from './TextField';
+import { reduxForm, Field } from 'redux-form';
+import RenderInput from './RenderInput';
 import { signupStyles as styles } from '../styles';
-import SignUpImage from '../assets/sign.png';
+
+const validate = (values) => {
+  const errors = {};
+  if (!values.firstname) {
+    errors.firstname = 'Required';
+  } else if (values.firstname.length > 15) {
+    errors.firstname = 'Must be 15 characters or less';
+  }
+  if (!values.lastname) {
+    errors.lastname = 'Required';
+  } else if (values.lastname.length > 15) {
+    errors.lastname = 'Must be 15 characters or less';
+  }
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^.+@.+$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+  if (!values.password) {
+    errors.password = 'Password is required';
+  }
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = 'Confirm Password is required';
+  }
+  if (!values.phoneNum) {
+    errors.phoneNum = 'Phone Number is required';
+  }
+  return errors;
+};
+
 
 class SignupPage extends React.Component {
   static navigationOptions = {
@@ -18,7 +51,8 @@ class SignupPage extends React.Component {
   };
 
   static propTypes = {
-    signUp: PropTypes.func
+    signUp: PropTypes.func,
+    input: PropTypes.object
   }
   constructor() {
     super();
@@ -28,12 +62,25 @@ class SignupPage extends React.Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      phoneNum: ''
+      phoneNum: '',
     };
   }
 
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   submit = () => {
-    this.props.signUp(this.state).then((response) => {
+    const values = lodash.pick(
+      this.state,
+      ['firstName',
+        'lastName',
+        'email',
+        'password',
+        'passwordConfirm',
+        'phoneNum']
+    );
+    this.props.signUp(values).then((response) => {
       console.log(response.data);
     });
   }
@@ -41,42 +88,69 @@ class SignupPage extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          source={SignUpImage}
-          style={styles.imageStyle}
+        <Text style={{ fontSize: 16, color: 'gray' }}>
+           Sign up with
+          <Text style={styles.linkStyle}>
+           Facebook
+          </Text>
+           or
+          <Text style={styles.linkStyle}>
+              Google
+          </Text>
+        </Text>
+        <Text style={styles.divider}>
+               ____________________  or  _____________________
+        </Text>
+        <Icon
+          name="user-plus"
+          size={40} color="#b24f60"
         />
-        <TextField
-          placeholder='Firstname'
+        <FormLabel labelStyle={styles.labelStyle}>
+          Firstname
+        </FormLabel>
+        <Field
+          name="firstname"
+          component={RenderInput}
           value={this.state.firstName}
-          onChangeText={firstName => this.setState({ firstName })}
+          onChangeText={this.onChange}
         />
-        <TextField
-          placeholder='Lastname'
+        <FormLabel>Lastname</FormLabel>
+        <Field
+          name="lastname"
+          component={RenderInput}
           value={this.state.lastName}
-          onChangeText={lastName => this.setState({ lastName })}
+          onChangeText={this.onChange}
         />
-        <TextField
-          placeholder='E-mail'
+         <FormLabel>E-mail</FormLabel>
+        <Field
+          name="email"
+          component={RenderInput}
           value={this.state.email}
-          onChangeText={email => this.setState({ email })}
+          onChangeText={this.onChange}
           keyboardType='email-address'
         />
-        <TextField
-          placeholder='Password'
+        <FormLabel>Password</FormLabel>
+        <Field
+          name="password"
+          component={RenderInput}
           secureTextEntry
           value={this.state.password}
-          onChangeText={password => this.setState({ password })}
+          onChangeText={this.onChange}
         />
-        <TextField
-          placeholder='Confirm Password'
+        <FormLabel>Confirm Password</FormLabel>
+        <Field
+          name="passwordConfirm"
+          component={RenderInput}
           secureTextEntry
           value={this.state.passwordConfirm}
-          onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+          onChangeText={this.onChange}
         />
-        <TextField
-          placeholder='+234 802 9040 852'
+        <FormLabel>Phone Number</FormLabel>
+        <Field
+          name="phoneNum"
+          component={RenderInput}
           value={this.state.phoneNum}
-          onChangeText={phoneNum => this.setState({ phoneNum })}
+          onChangeText={this.onChange}
           keyboardType='phone-pad'
         />
         <TouchableHighlight
@@ -136,4 +210,9 @@ const SignUpWithData = graphql(SignUpMutation, {
   }),
 })(SignupPage);
 
-export default SignUpWithData;
+const SignUpForm = reduxForm({
+  form: 'signup',
+  validate,
+})(SignUpWithData);
+
+export default SignUpForm;
