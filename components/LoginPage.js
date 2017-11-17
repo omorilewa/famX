@@ -6,8 +6,6 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FormLabel } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -84,31 +82,8 @@ class LoginPage extends Component {
   }
 }
 
-const LoginMutation = gql`
-  mutation getUser($email: String!, $password: String!) {
-    getUser(email: $email, password: $password) {
-        firstName
-        email
-    }
-  }
-`;
-
-const LoginWithData = graphql(LoginMutation, {
-  props: ({ mutate }) => ({
-    login: ({
-      email,
-      password
-    }) => mutate({
-      variables: {
-        email,
-        password
-      }
-    }),
-  }),
-})(LoginPage);
-
 export const LoginForm = reduxForm({
   form: 'login',
   validate,
-})(LoginWithData);
+})(LoginPage);
 
