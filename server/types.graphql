@@ -10,8 +10,12 @@
    createdAt: DateTime! # read-only (managed by Graphcool)
    updatedAt: DateTime! # read-only (managed by Graphcool)
 
+   firstName: String!
+   lastName: String!
    email: String! @isUnique
    password: String!
+   passwordConfirm: String!
+   phoneNum: String!
    facebookUserId: String @isUnique
  }
 
