@@ -37,11 +37,14 @@ class SignupPage extends Component {
     };
   }
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = (event) => {
+    console.log(event, '=======', this.props);
+    // this.setState({ [name]: value });
+    // console.log('changing state? ', this.state);
   }
 
   submit = () => {
+    console.log('before: ', this.state);
     const values = lodash.pick(
       this.state,
       ['firstName',
@@ -51,8 +54,9 @@ class SignupPage extends Component {
         'passwordConfirm',
         'phoneNum']
     );
+    console.log('the values are: ', values);
     this.props.signup(values).then((response) => {
-      console.log(response.data);
+      console.log('bababa\n', response.data);
     }).catch(err => console.log(err));
   }
 
@@ -75,49 +79,45 @@ class SignupPage extends Component {
           Firstname
         </FormLabel>
         <Field
-          name="firstname"
+          name="firstName"
           component={RenderInput}
           value={this.state.firstName}
-          onChangeText={this.onChange}
+          onChange={this.handleChange}
         />
         <FormLabel>Lastname</FormLabel>
         <Field
-          name="lastname"
+          name="lastName"
           component={RenderInput}
           value={this.state.lastName}
-          onChangeText={this.onChange}
+          onChange={this.handleChange}
         />
          <FormLabel>E-mail</FormLabel>
         <Field
           name="email"
           component={RenderInput}
           value={this.state.email}
-          onChangeText={this.onChange}
-          keyboardType='email-address'
+          onChange={this.handleChange}
         />
         <FormLabel>Password</FormLabel>
         <Field
           name="password"
           component={RenderInput}
-          secureTextEntry
           value={this.state.password}
-          onChangeText={this.onChange}
+          onChange={this.handleChange}
         />
         <FormLabel>Confirm Password</FormLabel>
         <Field
           name="passwordConfirm"
           component={RenderInput}
-          secureTextEntry
           value={this.state.passwordConfirm}
-          onChangeText={this.onChange}
+          onChange={this.handleChange}
         />
         <FormLabel>Phone Number</FormLabel>
         <Field
           name="phoneNum"
           component={RenderInput}
           value={this.state.phoneNum}
-          onChangeText={this.onChange}
-          keyboardType='phone-pad'
+          onChange={this.handleChange}
         />
         <TouchableHighlight
           style={styles.buttonStyle}
