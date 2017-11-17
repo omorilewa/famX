@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { StackNavigator } from 'react-navigation';
@@ -44,7 +44,7 @@ const Nav = StackNavigator({
   LoginPage: { screen: LoginForm },
 });
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
