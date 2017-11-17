@@ -18,7 +18,7 @@ import { validate } from '../utils';
 
 class SignupPage extends Component {
   static navigationOptions = {
-    title: 'Sign Up',
+    title: 'Signup',
   };
 
   static propTypes = {
@@ -132,7 +132,7 @@ class SignupPage extends Component {
   }
 }
 
-const SignUpMutation = gql`
+const SignupMutation = gql`
   mutation createUser(
     $firstName: String!,
     $lastName : String!,
@@ -154,7 +154,7 @@ const SignUpMutation = gql`
   }
 `;
 
-const SignUpWithData = graphql(SignUpMutation, {
+const SignupWithData = graphql(SignupMutation, {
   props: ({ mutate }) => ({
     signUp: ({
       firstName,
@@ -176,9 +176,8 @@ const SignUpWithData = graphql(SignUpMutation, {
   }),
 })(SignupPage);
 
-const SignUpForm = reduxForm({
+export const SignupForm = reduxForm({
   form: 'signup',
   validate,
-})(SignUpWithData);
+})(SignupWithData);
 
-export default SignUpForm;
