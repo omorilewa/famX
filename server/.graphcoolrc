@@ -1,0 +1,3 @@
+targets:
+  fambip: shared-eu-west-1/cja2pjayb9wjy0104wwsvcue4
+  default: fambip
