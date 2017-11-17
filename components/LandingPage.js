@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, TouchableHighlight } from 'react-native';
 import { landingStyles as styles } from '../styles';
 
-export default class LandingPage extends React.Component {
+export default class LandingPage extends Component {
   static navigationOptions = {
     title: 'FAMX',
   };
@@ -13,9 +13,14 @@ export default class LandingPage extends React.Component {
     navigation: PropTypes.object
   };
 
-  handlePress = () => {
+  handleSignupPress = () => {
     const { navigate } = this.props.navigation;
-    navigate('SignUpPage');
+    navigate('SignupPage');
+  }
+
+  handleLoginPress = () => {
+    const { navigate } = this.props.navigation;
+    navigate('LoginPage');
   }
 
 
@@ -23,11 +28,25 @@ export default class LandingPage extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableHighlight
-          onPress={this.handlePress}
+          onPress={this.handleSignupPress}
           style={styles.create}
         >
-          <Text style={styles.buttonText}>
+          <Text
+            style={styles.buttonText}
+            testID="SignupPage"
+          >
             SIGN UP
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={this.handleLoginPress}
+          style={styles.create}
+        >
+          <Text
+            style={styles.buttonText}
+            testID="LoginPage"
+          >
+            LOGIN
           </Text>
         </TouchableHighlight>
       </View>

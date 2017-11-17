@@ -10,7 +10,7 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addGraphQLSubscriptions } from 'add-graphql-subscriptions';
 import { Provider } from 'react-redux';
 import LandingPage from './components/LandingPage';
-import SignUpPage from './components/SignupPage';
+import { SignupForm, LoginForm } from './components';
 
 const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cj9y5vwd52g6c0136n0xaz7tn', {
   reconnect: true
@@ -37,7 +37,8 @@ const store = createStore(combineReducers({
 
 const Nav = StackNavigator({
   LandingPage: { screen: LandingPage },
-  SignUpPage: { screen: SignUpPage }
+  SignupPage: { screen: SignupForm },
+  LoginPage: { screen: LoginForm },
 });
 
 export default class App extends React.Component {
