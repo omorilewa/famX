@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Text, View, TouchableHighlight } from 'react-native';
 import { landingStyles as styles } from '../styles';
 
-export default class LandingPage extends Component {
+export class LandingPage extends Component {
   static navigationOptions = {
     title: 'FAMX',
   };

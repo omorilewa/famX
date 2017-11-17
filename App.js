@@ -9,8 +9,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addGraphQLSubscriptions } from 'add-graphql-subscriptions';
 import { Provider } from 'react-redux';
-import LandingPage from './components/LandingPage';
-import { SignupForm, LoginForm } from './components';
+import {
+  SignupForm,
+  LoginForm,
+  LandingPage
+} from './components';
 
 const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cj9y5vwd52g6c0136n0xaz7tn', {
   reconnect: true
