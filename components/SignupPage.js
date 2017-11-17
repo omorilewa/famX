@@ -22,7 +22,7 @@ class SignupPage extends Component {
   };
 
   static propTypes = {
-    signUp: PropTypes.func,
+    signup: PropTypes.func,
     input: PropTypes.object
   }
   constructor() {
@@ -51,9 +51,9 @@ class SignupPage extends Component {
         'passwordConfirm',
         'phoneNum']
     );
-    this.props.signUp(values).then((response) => {
+    this.props.signup(values).then((response) => {
       console.log(response.data);
-    });
+    }).catch(err => console.log(err));
   }
 
   render() {
@@ -156,7 +156,7 @@ const SignupMutation = gql`
 
 const SignupWithData = graphql(SignupMutation, {
   props: ({ mutate }) => ({
-    signUp: ({
+    signup: ({
       firstName,
       lastName,
       email,
