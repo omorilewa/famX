@@ -37,8 +37,8 @@ class SignupPage extends Component {
     };
   }
 
-  handleChange = (event) => {
-    console.log(event, '=======', this.props);
+  handleChange = (e) => {
+    console.log(e);
     // this.setState({ [name]: value });
     // console.log('changing state? ', this.state);
   }

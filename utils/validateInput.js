@@ -1,14 +1,14 @@
 export const validate = (values) => {
   const errors = {};
-  if (!values.firstname) {
-    errors.firstname = 'Required';
-  } else if (values.firstname.length > 15) {
-    errors.firstname = 'Must be 15 characters or less';
+  if (!values.firstName) {
+    errors.firstName = 'Required';
+  } else if (values.firstName.length > 15) {
+    errors.firstName = 'Must be 15 characters or less';
   }
-  if (!values.lastname) {
-    errors.lastname = 'Required';
-  } else if (values.lastname.length > 15) {
-    errors.lastname = 'Must be 15 characters or less';
+  if (!values.lastName) {
+    errors.lastName = 'Required';
+  } else if (values.lastName.length > 15) {
+    errors.lastName = 'Must be 15 characters or less';
   }
   if (!values.email) {
     errors.email = 'Required';
@@ -19,7 +19,7 @@ export const validate = (values) => {
     errors.password = 'Password is required';
   }
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = 'Please, confirm your password';
+    errors.passwordConfirm = 'Passwords don\'t match';
   }
   if (!values.phoneNum) {
     errors.phoneNum = 'Phone Number is required';
