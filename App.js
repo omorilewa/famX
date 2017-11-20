@@ -10,16 +10,16 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addGraphQLSubscriptions } from 'add-graphql-subscriptions';
 import { Provider } from 'react-redux';
 import {
-  SignupWithMutation,
+  SignupForm,
   LoginForm,
   LandingPage
 } from './components';
 
-const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cj9y5vwd52g6c0136n0xaz7tn', {
+const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja3tdjhj3zhr018235lgw8ef', {
   reconnect: true
 });
 
-const uri = 'https://api.graph.cool/simple/v1/cja2pjayb9wjy0104wwsvcue4';
+const uri = 'https://api.graph.cool/simple/v1/cja3tdjhj3zhr018235lgw8ef';
 
 const httpLink =
 new HttpLink({ uri });
@@ -40,7 +40,7 @@ const store = createStore(combineReducers({
 
 const Nav = StackNavigator({
   LandingPage: { screen: LandingPage },
-  SignupPage: { screen: SignupWithMutation },
+  SignupPage: { screen: SignupForm },
   LoginPage: { screen: LoginForm },
 });
 

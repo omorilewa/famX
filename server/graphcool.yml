@@ -28,18 +28,25 @@ functions:
         src: ./src/facebook/facebookAuthentication.ts
     type: resolver
     schema: ./src/facebook/facebookAuthentication.graphql
-  loggedInUser:
-    handler:
-      code:
-        src: ./src/facebook/loggedInUser.ts
-    type: resolver
-    schema: ./src/facebook/loggedInUser.graphql
 
-  hello:
-    handler:
-      code: src/hello.js
+  signup:
     type: resolver
-    schema: src/hello.graphql
+    schema: src/email-password/signup.graphql
+    handler:
+      code: src/email-password/signup.ts
+
+  authenticate:
+    type: resolver
+    schema: src/email-password/authenticate.graphql
+    handler:
+      code: src/email-password/authenticate.ts
+
+  loggedInUser:
+    type: resolver
+    schema: src/email-password/loggedInUser.graphql
+    handler:
+      code: src/email-password/loggedInUser.ts
+
 
 
 # Model/Relation permissions are used to limit the API access
