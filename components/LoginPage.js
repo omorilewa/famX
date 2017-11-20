@@ -1,13 +1,11 @@
 
 import React, { Component } from 'react';
-import lodash from 'lodash';
 import {
   Text,
   View,
   TouchableHighlight
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { FormLabel } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import RenderInput from './RenderInput';
@@ -21,57 +19,37 @@ class LoginPage extends Component {
 
   static propTypes = {
     login: PropTypes.func,
-    input: PropTypes.object
+    input: PropTypes.object,
+    handleSubmit: PropTypes.func
   }
 
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
-
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  submit = () => {
-    const values = lodash.pick(
-      this.state,
-      ['email', 'password']
-    );
-    this.props.login(values).then((response) => {
-      console.log(response.data);
-    });
+  handlePress = (values) => {
+    this.props.login(values)
+      .then(response => console.log(response.data))
+      .catch(error => console.log(error));
   }
 
   render() {
+    const { handleSubmit } = this.props;
     return (
       <View style={styles.container}>
         <Icon
           name="user-plus"
           size={40} color="#b24f60"
         />
-        <FormLabel>E-mail</FormLabel>
         <Field
           name="email"
           component={RenderInput}
-          value={this.state.email}
-          onChangeText={this.onChange}
-          keyboardType='email-address'
+          label="Email"
         />
-        <FormLabel>Password</FormLabel>
         <Field
           name="password"
           component={RenderInput}
-          secureTextEntry
-          value={this.state.password}
-          onChangeText={this.onChange}
+          label="Password"
         />
         <TouchableHighlight
           style={styles.buttonStyle}
-          onPress={this.submit}
+          onPress={handleSubmit(this.handlePress)}
         >
           <Text style={{ color: '#fff' }}>
             LOGIN
@@ -82,8 +60,10 @@ class LoginPage extends Component {
   }
 }
 
-export const LoginForm = reduxForm({
+const LoginForm = reduxForm({
   form: 'login',
   validate,
 })(LoginPage);
+
+export default LoginForm;
 

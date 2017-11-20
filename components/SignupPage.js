@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import lodash from 'lodash';
 import {
   Text,
   View,
@@ -9,7 +8,6 @@ import {
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { FormLabel } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import RenderInput from './RenderInput';
@@ -23,111 +21,71 @@ class SignupPage extends Component {
 
   static propTypes = {
     signup: PropTypes.func,
-    input: PropTypes.object
-  }
-  constructor() {
-    super();
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      phoneNum: '',
-    };
+    input: PropTypes.object,
+    handleSubmit: PropTypes.func
   }
 
-  handleChange = (e) => {
-    console.log(e);
-    // this.setState({ [name]: value });
-    // console.log('changing state? ', this.state);
-  }
-
-  submit = () => {
-    console.log('before: ', this.state);
-    const values = lodash.pick(
-      this.state,
-      ['firstName',
-        'lastName',
-        'email',
-        'password',
-        'passwordConfirm',
-        'phoneNum']
-    );
-    console.log('the values are: ', values);
+  handlePress = (values) => {
     this.props.signup(values).then((response) => {
-      console.log('bababa\n', response.data);
+      console.log(response.data);
     }).catch(err => console.log(err));
   }
 
   render() {
+    const { handleSubmit } = this.props;
     return (
-      <View style={styles.container}>
-        <Text style={{ fontSize: 16, color: 'gray' }}>
-           Sign up with<Text style={styles.linkStyle}> Facebook </Text>
-           or
-          <Text style={styles.linkStyle}> Google</Text>
-        </Text>
-        <Text style={styles.divider}>
-               ____________________  or  _____________________
-        </Text>
-        <Icon
-          name="user-plus"
-          size={40} color="#b24f60"
-        />
-        <FormLabel labelStyle={styles.labelStyle}>
-          Firstname
-        </FormLabel>
-        <Field
-          name="firstName"
-          component={RenderInput}
-          value={this.state.firstName}
-          onChange={this.handleChange}
-        />
-        <FormLabel>Lastname</FormLabel>
-        <Field
-          name="lastName"
-          component={RenderInput}
-          value={this.state.lastName}
-          onChange={this.handleChange}
-        />
-         <FormLabel>E-mail</FormLabel>
-        <Field
-          name="email"
-          component={RenderInput}
-          value={this.state.email}
-          onChange={this.handleChange}
-        />
-        <FormLabel>Password</FormLabel>
-        <Field
-          name="password"
-          component={RenderInput}
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <FormLabel>Confirm Password</FormLabel>
-        <Field
-          name="passwordConfirm"
-          component={RenderInput}
-          value={this.state.passwordConfirm}
-          onChange={this.handleChange}
-        />
-        <FormLabel>Phone Number</FormLabel>
-        <Field
-          name="phoneNum"
-          component={RenderInput}
-          value={this.state.phoneNum}
-          onChange={this.handleChange}
-        />
-        <TouchableHighlight
-          style={styles.buttonStyle}
-          onPress={this.submit}
-        >
-          <Text style={{ color: '#fff' }}>
-            SUBMIT DETAILS
+        <View style={styles.container}>
+          <Text style={{ fontSize: 16, color: 'gray' }}>
+            Sign up with<Text style={styles.linkStyle}> Facebook </Text>
+            or
+            <Text style={styles.linkStyle}> Google</Text>
           </Text>
-          </TouchableHighlight>
-      </View>
+          <Text style={styles.divider}>
+                ____________________  or  _____________________
+          </Text>
+          <Icon
+            name="user-plus"
+            size={40} color="#b24f60"
+          />
+          <Field
+            name="firstName"
+            component={RenderInput}
+            label="Firstname"
+          />
+          <Field
+            name="lastName"
+            component={RenderInput}
+            label="Lastname"
+          />
+          <Field
+            name="email"
+            component={RenderInput}
+            label="E-mail"
+          />
+          <Field
+            name="password"
+            component={RenderInput}
+            label="Password"
+          />
+          <Field
+            name="passwordConfirm"
+            component={RenderInput}
+            label="Confirm Password"
+          />
+          <Field
+            name="phoneNum"
+            component={RenderInput}
+            label="Phone Number"
+          />
+          <TouchableHighlight
+            style={styles.buttonStyle}
+            onPress={handleSubmit(this.handlePress)}
+          >
+            <Text style={{ color: '#fff' }}>
+              SUBMIT DETAILS
+            </Text>
+            </TouchableHighlight>
+          </View>
     );
   }
 }
@@ -176,8 +134,10 @@ const SignupWithData = graphql(SignupMutation, {
   }),
 })(SignupPage);
 
-export const SignupForm = reduxForm({
+const SignupForm = reduxForm({
   form: 'signup',
   validate,
 })(SignupWithData);
+
+export default SignupForm;
 

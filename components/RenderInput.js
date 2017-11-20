@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormInput } from 'react-native-elements';
+import { FormInput, FormLabel } from 'react-native-elements';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { textfieldStyles as styles } from '../styles';
@@ -9,10 +9,12 @@ const RenderInput = ({
   placeholder,
   keyboardType,
   secureTextEntry,
+  label,
   meta: { touched, error },
   input: { onChange, ...restInput }
 }) =>
   <View style={styles.viewStyle}>
+    <FormLabel labelStyle={{ textAlign: 'center' }}>{label}</FormLabel>
     <FormInput
       containerStyle={(touched && error) ?
         [styles.containerStyle, styles.errorStyle] : styles.containerStyle}
@@ -37,7 +39,7 @@ RenderInput.propTypes = {
   meta: PropTypes.object,
   input: PropTypes.object,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  label: PropTypes.string,
   secureTextEntry: PropTypes.bool,
   onChangeText: PropTypes.func,
   keyboardType: PropTypes.oneOf(['email-address', 'phone-pad'])
