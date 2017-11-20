@@ -12,7 +12,7 @@
 
    firstName: String!
    lastName: String!
-   email: String!
+   email: String! @isUnique
    password: String!
    passwordConfirm: String!
    phoneNum: String!
