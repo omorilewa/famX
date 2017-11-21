@@ -42,7 +42,6 @@ class SignupPage extends Component {
         '641679006221114',
         { permissions: ['public_profile', 'email', 'user_friends'], behavior: 'native' }
       );
-      // console.log(token);
       switch (type) {
         case 'success': {
           try {
