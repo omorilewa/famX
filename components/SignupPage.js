@@ -32,6 +32,8 @@ class SignupPage extends Component {
 
   handlePress = (values) => {
     this.props.signup(values).then((response) => {
+      const { navigate } = this.props.navigation;
+      navigate('CreateFamilyPage');
       console.log(response.data);
     }).catch(err => console.log(err));
   }
@@ -42,17 +44,8 @@ class SignupPage extends Component {
         '641679006221114',
         { permissions: ['public_profile', 'email', 'user_friends'], behavior: 'native' }
       );
-      // console.log(token);
       switch (type) {
         case 'success': {
-          // Get the user's name using Facebook's Graph API
-          // const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email`);
-          // const profile = await response.json();
-          // this.setState({
-          //   firstName: profile.first_name,
-          //   lastName: profile.last_name,
-          //   email: profile.email,
-          // });
           try {
             await this.props.authenticateUserMutation({
               variables: {
@@ -60,7 +53,9 @@ class SignupPage extends Component {
               },
             }).then(({ data }) => {
               console.log(data);
-              this._storeAuthTokensLocally(data.authenticateFacebookUser.token, token, expires);
+              const { navigate } = this.props.navigation;
+              navigate('CreateFamilyPage');
+              this._storeAuthTokensLocally(data.authenticateFacebookUser.token.toString(), token.toString(), expires.toString());
             });
           } catch (e) {
             console.log('the error is ', e);
