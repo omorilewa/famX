@@ -12,7 +12,8 @@ import { Provider } from 'react-redux';
 import {
   SignupForm,
   LoginForm,
-  LandingPage
+  LandingPage,
+  CreateFamilyPage
 } from './components';
 
 const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja8r6dcn33ui0154xhdkhlel', {
@@ -42,6 +43,7 @@ const Nav = StackNavigator({
   LandingPage: { screen: LandingPage },
   SignupPage: { screen: SignupForm },
   LoginPage: { screen: LoginForm },
+  CreateFamilyPage: { screen: CreateFamilyPage }
 });
 
 export default class App extends Component {
