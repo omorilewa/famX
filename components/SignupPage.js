@@ -45,14 +45,6 @@ class SignupPage extends Component {
       // console.log(token);
       switch (type) {
         case 'success': {
-          // Get the user's name using Facebook's Graph API
-          // const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email`);
-          // const profile = await response.json();
-          // this.setState({
-          //   firstName: profile.first_name,
-          //   lastName: profile.last_name,
-          //   email: profile.email,
-          // });
           try {
             await this.props.authenticateUserMutation({
               variables: {
