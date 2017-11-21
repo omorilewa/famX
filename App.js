@@ -15,11 +15,11 @@ import {
   LandingPage
 } from './components';
 
-const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja3tdjhj3zhr018235lgw8ef', {
+const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja8r6dcn33ui0154xhdkhlel', {
   reconnect: true
 });
 
-const uri = 'https://api.graph.cool/simple/v1/cja3tdjhj3zhr018235lgw8ef';
+const uri = 'https://api.graph.cool/simple/v1/cja8r6dcn33ui0154xhdkhlel';
 
 const httpLink =
 new HttpLink({ uri });
