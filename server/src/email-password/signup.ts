@@ -8,12 +8,8 @@ interface User {
 }
 
 interface EventData {
-  firstName: string
-  lastName: string
   email: string
   password: string
-  passwordConfirm: string
-  phoneNum: string
 }
 
 const SALT_ROUNDS = 10
@@ -25,32 +21,10 @@ export default async (event: FunctionEvent<EventData>) => {
     const graphcool = fromEvent(event)
     const api = graphcool.api('simple/v1')
 
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      passwordConfirm,
-      phoneNum } = event.data
+    const { email, password } = event.data
 
     if (!validator.isEmail(email)) {
       return { error: 'Not a valid email' }
-    }
-
-    if (!validator.equals(password, passwordConfirm)) {
-      return { error: 'Passwords do not match' }
-    }
-
-    if (!validator.isEmpty(firstName)) {
-      return { error: 'This field is required' }
-    }
-
-    if (!validator.isEmpty(lastName)) {
-      return { error: 'This field is required' }
-    }
-
-    if (!validator.isEmpty(phoneNum)) {
-      return { error: 'This field is required' }
     }
 
     // check if user exists already
@@ -65,7 +39,7 @@ export default async (event: FunctionEvent<EventData>) => {
     const hash = await bcrypt.hash(password, SALT_ROUNDS)
 
     // create new user
-    const userId = await createGraphcoolUser(api, firstName, lastName,email, password, passwordConfirm, hash)
+    const userId = await createGraphcoolUser(api, email, hash)
 
     // generate node token for new User node
     const token = await graphcool.generateNodeToken(userId, 'User')
@@ -93,22 +67,12 @@ async function getUser(api: GraphQLClient, email: string): Promise<{ User }> {
   return api.request<{ User }>(query, variables)
 }
 
-async function createGraphcoolUser(api: GraphQLClient, firstName: string, lastName: string, email: string, password: string, passwordConfirm: string, phoneNum: string): Promise<string> {
+async function createGraphcoolUser(api: GraphQLClient, email: string, password: string): Promise<string> {
   const mutation = `
-    mutation createGraphcoolUser(
-      $firstName: String!,
-      $lastName: String!,
-      $email: String!,
-      $password: String!,
-      $passwordConfirm: String!,
-      $phoneNum: String!) {
+    mutation createGraphcoolUser($email: String!, $password: String!) {
       createUser(
-        firstName: $firstName,
-        lastName: $lastName,
         email: $email,
-        password: $password,
-        passwordConfirm: $passwordConfirm,
-        phoneNum: $phoneNum
+        password: $password
       ) {
         id
       }
@@ -116,12 +80,8 @@ async function createGraphcoolUser(api: GraphQLClient, firstName: string, lastNa
   `
 
   const variables = {
-    firstName,
-    lastName,
     email,
     password: password,
-    passwordConfirm,
-    phoneNum
   }
 
   return api.request<{ createUser: User }>(mutation, variables)

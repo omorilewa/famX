@@ -8,6 +8,7 @@ interface User {
 interface FacebookUser {
   id: string
   email: string | null
+  name: string | null
 }
 
 interface EventData {
@@ -25,7 +26,7 @@ export default async (event: FunctionEvent<EventData>) => {
 
     // call Facebook API to obtain user data
     const facebookUser = await getFacebookUser(facebookToken)
-
+    console.log('the user is', facebookUser);
     // get graphcool user by facebook id
     const user: User = await getGraphcoolUser(api, facebookUser.id)
       .then(r => r.User)
@@ -50,7 +51,7 @@ export default async (event: FunctionEvent<EventData>) => {
 }
 
 async function getFacebookUser(facebookToken: string): Promise<FacebookUser> {
-  const endpoint = `https://graph.facebook.com/v2.9/me?fields=id%2Cemail&access_token=${facebookToken}`
+  const endpoint = `https://graph.facebook.com/v2.9/me?fields=id%2Cemail%2Cname&access_token=${facebookToken}`
   const data = await fetch(endpoint)
     .then(response => response.json())
 
@@ -79,10 +80,12 @@ async function getGraphcoolUser(api: GraphQLClient, facebookUserId: string): Pro
 
 async function createGraphcoolUser(api: GraphQLClient, facebookUser: FacebookUser): Promise<string> {
   const mutation = `
-    mutation createUser($facebookUserId: String!, $email: String) {
+    mutation createUser($facebookUserId: String!, $email: String, $firstName: String, $lastName: String) {
       createUser(
         facebookUserId: $facebookUserId
         email: $email
+        firstName: $firstName
+        lastName: $lastName
       ) {
         id
       }
@@ -92,6 +95,8 @@ async function createGraphcoolUser(api: GraphQLClient, facebookUser: FacebookUse
   const variables = {
     facebookUserId: facebookUser.id,
     email: facebookUser.email,
+    firstName: facebookUser.name.split(" ")[1],
+    lastName: facebookUser.name.split(" ")[0]
   }
 
   return api.request<{ createUser: User }>(mutation, variables)
