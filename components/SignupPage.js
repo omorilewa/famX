@@ -96,8 +96,9 @@ class SignupPage extends Component {
     const { handleSubmit } = this.props;
     return (
       <View style={styles.container}>
-        <View >
-           <Text>Sign up with </Text><TouchableHighlight
+        <Text>Sign up with </Text>
+        <View style={styles.socialMediaSectionStyles}>
+           <TouchableHighlight
            onPress={this._handleFacebookLogin}>
            <Text style={styles.linkStyle}> Facebook </Text>
            </TouchableHighlight>
@@ -109,17 +110,19 @@ class SignupPage extends Component {
         </Text>
           <Icon
             name="user-plus"
-            size={40} color="#b24f60"
+            size={40}
+            style={styles.iconStyle}
+            color="#b24f60"
           />
           <Field
             name="firstName"
             component={RenderInput}
-            label="Firstname"
+            label="First Name"
           />
           <Field
             name="lastName"
             component={RenderInput}
-            label="Lastname"
+            label="Last Name"
           />
           <Field
             name="email"

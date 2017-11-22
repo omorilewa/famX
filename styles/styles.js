@@ -41,14 +41,14 @@ export const signupStyles = StyleSheet.create({
   imageStyle: {
     height: '15%',
     width: '24%',
-    marginTop: '2%',
+    // marginTop: '2%',
     marginBottom: '5%'
   },
   buttonStyle: {
     height: '7%',
     backgroundColor: '#b24f60',
     // backgroundColor: '#4b5320', - should we need to revert to former colour
-    marginTop: '9%',
+    marginTop: '5%',
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -68,7 +68,14 @@ export const signupStyles = StyleSheet.create({
   },
   labelStyle: {
     fontWeight: 'bold',
-    fontSize: 13
+    fontSize: 13,
+    marginTop: 0
+  },
+  socialMediaSectionStyles: {
+    flexDirection: 'row'
+  },
+  iconStyle: {
+    marginBottom: 6
   }
 });
 
@@ -137,7 +144,11 @@ export const textfieldStyles = StyleSheet.create({
     borderWidth: 0.5,
     minHeight: 26,
     marginLeft: 0,
-    marginRight: 0
+    marginRight: 0,
+    paddingBottom: 0,
+    paddingTop: 0,
+    marginBottom: 0,
+    marginTop: 0
   },
   inputStyle: {
     minHeight: 23,
@@ -156,5 +167,11 @@ export const textfieldStyles = StyleSheet.create({
     justifyContent: 'flex-end',
     display: 'flex',
     flexDirection: 'row'
+  },
+  labelStyle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 13,
+    marginTop: 3
   }
 });

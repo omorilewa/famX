@@ -14,7 +14,7 @@ const RenderInput = ({
   input: { onChange, ...restInput }
 }) =>
   <View style={styles.viewStyle}>
-    <FormLabel labelStyle={{ textAlign: 'center' }}>{label}</FormLabel>
+    <FormLabel labelStyle={styles.labelStyle}>{label}</FormLabel>
     <FormInput
       containerStyle={(touched && error) ?
         [styles.containerStyle, styles.errorStyle] : styles.containerStyle}
