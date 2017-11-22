@@ -22,8 +22,7 @@ const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja8r
 
 const uri = 'https://api.graph.cool/simple/v1/cja8r6dcn33ui0154xhdkhlel';
 
-const httpLink =
-new HttpLink({ uri });
+const httpLink = new HttpLink({ uri });
 
 const linkWithSubscriptions = addGraphQLSubscriptions(
   httpLink,
