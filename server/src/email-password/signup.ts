@@ -10,6 +10,10 @@ interface User {
 interface EventData {
   email: string
   password: string
+  firstName: string
+  lastName: string
+  passwordConfirm: string
+  phoneNum: string
 }
 
 const SALT_ROUNDS = 10
@@ -21,7 +25,7 @@ export default async (event: FunctionEvent<EventData>) => {
     const graphcool = fromEvent(event)
     const api = graphcool.api('simple/v1')
 
-    const { email, password } = event.data
+    const { firstName, lastName, email, password, passwordConfirm, phoneNum } = event.data
 
     if (!validator.isEmail(email)) {
       return { error: 'Not a valid email' }
@@ -39,12 +43,12 @@ export default async (event: FunctionEvent<EventData>) => {
     const hash = await bcrypt.hash(password, SALT_ROUNDS)
 
     // create new user
-    const userId = await createGraphcoolUser(api, email, hash)
+    const userId = await createGraphcoolUser(api, firstName, lastName, email, hash, passwordConfirm, phoneNum)
 
     // generate node token for new User node
     const token = await graphcool.generateNodeToken(userId, 'User')
 
-    return { data: { id: userId, token } }
+    return { data: { id: userId, token, firstName } }
   } catch (e) {
     console.log(e)
     return { error: 'An unexpected error occured during signup.' }
@@ -67,21 +71,30 @@ async function getUser(api: GraphQLClient, email: string): Promise<{ User }> {
   return api.request<{ User }>(query, variables)
 }
 
-async function createGraphcoolUser(api: GraphQLClient, email: string, password: string): Promise<string> {
+async function createGraphcoolUser(api: GraphQLClient, firstName: string, lastName:string, email: string, password: string, passwordConfirm: string, phoneNum:string): Promise<string> {
   const mutation = `
-    mutation createGraphcoolUser($email: String!, $password: String!) {
+    mutation createGraphcoolUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $passwordConfirm: String!, $phoneNum: String!) {
       createUser(
+        firstName: $firstName,
+        lastName : $lastName,
         email: $email,
-        password: $password
+        password: $password,
+        passwordConfirm: $passwordConfirm,
+        phoneNum: $phoneNum
       ) {
         id
+        firstName
       }
     }
   `
 
   const variables = {
+    firstName,
+    lastName,
     email,
-    password: password,
+    password,
+    passwordConfirm,
+    phoneNum
   }
 
   return api.request<{ createUser: User }>(mutation, variables)
