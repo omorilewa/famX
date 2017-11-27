@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
+import gql from 'graphql-tag';
+import { graphql, compose } from 'react-apollo';
 import RenderInput from './RenderInput';
 import { signupStyles as styles } from '../styles';
 import { validate } from '../utils';
@@ -20,13 +23,27 @@ class LoginPage extends Component {
   static propTypes = {
     login: PropTypes.func,
     input: PropTypes.object,
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    authenticateUserMutation: PropTypes.func,
+    navigation: PropTypes.object
   }
 
-  handlePress = (values) => {
-    this.props.login(values)
-      .then(response => console.log(response.data))
-      .catch(error => console.log(error));
+  loginUser = async (values) => {
+    const { email, password } = values;
+    try {
+      const response = await
+        this.props.authenticateUserMutation({ variables: { email, password } });
+      const { navigate } = this.props.navigation;
+      const tokenToString = response.data.authenticateUser.token.toString();
+      this._storeAuthTokensLocally(tokenToString);
+      navigate('CreateFamilyPage');
+    } catch (e) {
+      console.error('An error occurred: ', e);
+    }
+  }
+
+  _storeAuthTokensLocally = async (graphcoolToken) => {
+    await AsyncStorage.setItem('graphcoolToken', graphcoolToken);
   }
 
   render() {
@@ -49,7 +66,7 @@ class LoginPage extends Component {
         />
         <TouchableHighlight
           style={styles.buttonStyle}
-          onPress={handleSubmit(this.handlePress)}
+          onPress={handleSubmit(this.loginUser)}
         >
           <Text style={{ color: '#fff' }}>
             LOGIN
@@ -59,11 +76,20 @@ class LoginPage extends Component {
     );
   }
 }
+const AUTHENTICATE_EMAIL_USER = gql`
+mutation AuthenticateUser($email: String!, $password: String!) {
+  authenticateUser(email: $email, password: $password) {
+    token
+  }
+}
+`;
 
 const LoginForm = reduxForm({
   form: 'login',
   validate,
 })(LoginPage);
 
-export default LoginForm;
+const LoginWithMutation = compose(graphql(AUTHENTICATE_EMAIL_USER, { name: 'authenticateUserMutation' }))(LoginForm);
+
+export default LoginWithMutation;
 
