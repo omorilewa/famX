@@ -99,6 +99,17 @@ export const createFamilyStyles = StyleSheet.create({
     marginRight: 0,
     marginTop: '5%'
   },
+  contentContainerStyle: {
+    flex: 1
+  },
+  contentStyle: {
+    padding: 10
+  },
+  contentViewStyle: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   inputStyle: {
     minHeight: 23,
     fontSize: 15,

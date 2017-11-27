@@ -26,12 +26,14 @@ export default class CreateFamilyPage extends Component {
   render() {
     return (
       <Container>
-      <Content contentContainerStyle={{ flex: 1 }} style={{ padding: 10 }}>
+      <Content
+      contentContainerStyle={styles.contentContainerStyle}
+      style={styles.contentStyle}>
           <Form>
             <Button block>
               <Text>CREATE YOUR FAMILY</Text>
             </Button>
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.contentViewStyle}>
               <FormItem style={{ width: '70%' }}>
                 <Input
                 style={styles.inputStyle}
@@ -41,7 +43,7 @@ export default class CreateFamilyPage extends Component {
             <Button style={styles.buttonStyle} block>
               <Text style={{ color: '#fff' }}> ADD MEMBERS TO THE FAMILY</Text>
             </Button>
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.contentViewStyle}>
               <FormItem style={{ width: '70%' }}>
                 <Input
                 style={styles.inputStyle}
