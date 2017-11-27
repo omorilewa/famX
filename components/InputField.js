@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormInput } from 'react-native-elements';
 import { createFamilyStyles as styles } from '../styles';
 
