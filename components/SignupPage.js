@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import {
   Text,
@@ -27,7 +27,8 @@ class SignupPage extends Component {
     signup: PropTypes.func,
     input: PropTypes.object,
     handleSubmit: PropTypes.func,
-    authenticateUserMutation: PropTypes.func
+    authenticateUserMutation: PropTypes.func,
+    navigation: PropTypes.object
   }
 
   handlePress = (values) => {
@@ -54,8 +55,13 @@ class SignupPage extends Component {
             }).then(({ data }) => {
               console.log(data);
               const { navigate } = this.props.navigation;
+              const tokenToString = data.authenticateFacebookUser.token.toString();
               navigate('CreateFamilyPage');
-              this._storeAuthTokensLocally(data.authenticateFacebookUser.token.toString(), token.toString(), expires.toString());
+              this._storeAuthTokensLocally(
+                tokenToString,
+                token.toString(),
+                expires.toString()
+              );
             });
           } catch (e) {
             console.log('the error is ', e);
