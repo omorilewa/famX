@@ -30,7 +30,7 @@ export default class CreateFamilyPage extends Component {
       contentContainerStyle={styles.contentContainerStyle}
       style={styles.contentStyle}>
           <Form>
-            <Button block>
+            <Button style={styles.buttonStyle} block>
               <Text>CREATE YOUR FAMILY</Text>
             </Button>
             <View style={styles.contentViewStyle}>
@@ -77,20 +77,9 @@ export default class CreateFamilyPage extends Component {
                 <Icon name='arrow-round-forward'/>
               </Button>
             </FormItem>
-            <Button block>
+            <Button style={styles.buttonStyle} block>
               <Text>INVITE STATUS</Text>
             </Button>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ flex: .5 }}>
-                <Text>Placeholder</Text>
-              </View>
-              <View style={{ flex: .5 }}>
-                <Picker>
-                  <Picker.Item label="Java" value="java"/>
-                  <Picker.Item label="JavaScript" value="js"/>
-                </Picker>
-              </View>
-            </View>
          </Form>
         </Content>
       </Container>
