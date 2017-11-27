@@ -9,6 +9,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addGraphQLSubscriptions } from 'add-graphql-subscriptions';
 import { Provider } from 'react-redux';
+import { Font } from 'expo';
 import {
   SignupForm,
   LoginForm,
@@ -46,6 +47,12 @@ const Nav = StackNavigator({
 });
 
 export default class App extends Component {
+  async componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
   render() {
     return (
       <Provider store={store}>
