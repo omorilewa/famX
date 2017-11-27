@@ -102,6 +102,9 @@ export const createFamilyStyles = StyleSheet.create({
   contentContainerStyle: {
     flex: 1
   },
+  formWidth: {
+    width: '70%'
+  },
   contentStyle: {
     padding: 10
   },

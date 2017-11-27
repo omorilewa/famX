@@ -34,7 +34,7 @@ export default class CreateFamilyPage extends Component {
               <Text>CREATE YOUR FAMILY</Text>
             </Button>
             <View style={styles.contentViewStyle}>
-              <FormItem style={{ width: '70%' }}>
+              <FormItem style={styles.formWidth}>
                 <Input
                 style={styles.inputStyle}
                 placeholder='Enter the family name' />
@@ -44,7 +44,7 @@ export default class CreateFamilyPage extends Component {
               <Text style={{ color: '#fff' }}> ADD MEMBERS TO THE FAMILY</Text>
             </Button>
             <View style={styles.contentViewStyle}>
-              <FormItem style={{ width: '70%' }}>
+              <FormItem style={styles.formWidth}>
                 <Input
                 style={styles.inputStyle}
                 placeholder='Enter e-mail here' />
