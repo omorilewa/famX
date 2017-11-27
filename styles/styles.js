@@ -105,6 +105,11 @@ export const createFamilyStyles = StyleSheet.create({
   formWidth: {
     width: '70%'
   },
+  viewStyle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   contentStyle: {
     padding: 10
   },
