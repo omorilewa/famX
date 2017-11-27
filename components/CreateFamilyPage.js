@@ -54,10 +54,7 @@ export default class CreateFamilyPage extends Component {
             </View>
             <View style={styles.viewStyle}>
               <Picker
-                style={{
-                  width: '70%',
-                  alignSelf: 'center'
-                }}
+                style={styles.pickerStyle}
                 selectedValue={this.state.valueSelected}
                 onValueChange={(itemValue) => {
                   this.setState({ valueSelected: itemValue });

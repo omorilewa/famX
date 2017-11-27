@@ -110,6 +110,10 @@ export const createFamilyStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  pickerStyle: {
+    width: '70%',
+    alignSelf: 'center'
+  },
   contentStyle: {
     padding: 10
   },
