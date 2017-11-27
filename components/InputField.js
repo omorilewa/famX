@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormInput } from 'react-native-elements';
-import { textfieldStyles as styles } from '../styles';
+import { createFamilyStyles as styles } from '../styles';
 
 const InputField = () =>
-<FormInput containerStyle={styles.containerStyle}/>;
+<FormInput containerStyle={styles.inputStyleFam}/>;
 
 
 export default InputField;
