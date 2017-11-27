@@ -75,7 +75,7 @@ export const signupStyles = StyleSheet.create({
     flexDirection: 'row'
   },
   iconStyle: {
-    marginBottom: 6
+    marginTop: 6
   }
 });
 
@@ -85,16 +85,20 @@ export const createFamilyStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     alignItems: 'center',
+    justifyContent: 'center'
+  },
+  innerInput: {
+    flex: 1
   },
   inlineView: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row'
   },
   containerStyle: {
     height: '6%',
     borderColor: 'lightgray',
     backgroundColor: 'white',
-    borderWidth: 0.5,
+    // borderWidth: 0.5,
     minHeight: 26,
     marginLeft: 0,
     marginRight: 0,
@@ -102,22 +106,60 @@ export const createFamilyStyles = StyleSheet.create({
   },
   inputStyle: {
     minHeight: 23,
+    fontSize: 15,
+    width: '60%',
+    marginLeft: 0,
+    paddingLeft: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  picker: {
+    width: 70
+  },
+  iconStyle: {
+    // marginTop: 15,
+    borderWidth: 0,
+    borderBottomWidth: 0
+  },
+  inputStyleFam: {
+    minHeight: 23,
     fontSize: 10,
-    width: '100%'
+    width: '100%',
+    // height: '15%',
+    // borderColor: 'lightgray',
+    // backgroundColor: 'white',
+    // borderWidth: 0.5,
+    // minHeight: 26,
+    // marginLeft: 0,
+    // marginRight: 6,
+    // paddingBottom: 0,
+    // paddingTop: 0,
+    // marginBottom: 0,
+    // marginTop: 5,
+    // width: '35%'
   },
   buttonStyle: {
-    height: '7%',
-    backgroundColor: '#b24f60',
+    // height: '20%',
+    backgroundColor: '#696969',
+    // backgroundColor: '#4b5320', - should we need to revert to former colour
+    marginTop: '4%',
+    // borderRadius: 3,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  smallButtonStyle: {
+    // height: '10%',
+    // backgroundColor: '#b24f60',
     // backgroundColor: '#4b5320', - should we need to revert to former colour
     marginTop: '9%',
-    borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 250
+    // borderRadius: 3,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // minWidth: 50
   },
-  Icon: {
-    padding: 10,
-  },
+  // Icon: {
+  //   padding: 10,
+  // },
   linkStyle: {
     color: '#670A0A',
     fontWeight: 'bold'
@@ -148,7 +190,8 @@ export const textfieldStyles = StyleSheet.create({
     paddingBottom: 0,
     paddingTop: 0,
     marginBottom: 0,
-    marginTop: 0
+    marginTop: 0,
+
   },
   inputStyle: {
     minHeight: 23,
