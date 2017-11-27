@@ -16,6 +16,9 @@ import {
 import { createFamilyStyles as styles } from '../styles';
 
 export default class CreateFamilyPage extends Component {
+  static navigationOptions = {
+    title: 'Create family',
+  };
   constructor(props) {
     super(props);
     this.state = {
