@@ -9,10 +9,12 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { addGraphQLSubscriptions } from 'add-graphql-subscriptions';
 import { Provider } from 'react-redux';
+import { Font } from 'expo';
 import {
   SignupForm,
   LoginForm,
-  LandingPage
+  LandingPage,
+  CreateFamilyPage
 } from './components';
 
 const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja8r6dcn33ui0154xhdkhlel', {
@@ -21,8 +23,7 @@ const wsClient = new SubscriptionClient('wss://subscriptions.graph.cool/v1/cja8r
 
 const uri = 'https://api.graph.cool/simple/v1/cja8r6dcn33ui0154xhdkhlel';
 
-const httpLink =
-new HttpLink({ uri });
+const httpLink = new HttpLink({ uri });
 
 const linkWithSubscriptions = addGraphQLSubscriptions(
   httpLink,
@@ -42,9 +43,16 @@ const Nav = StackNavigator({
   LandingPage: { screen: LandingPage },
   SignupPage: { screen: SignupForm },
   LoginPage: { screen: LoginForm },
+  CreateFamilyPage: { screen: CreateFamilyPage }
 });
 
 export default class App extends Component {
+  async componentWillMount() {
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
   render() {
     return (
       <Provider store={store}>

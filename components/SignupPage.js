@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import {
   Text,
@@ -27,11 +27,14 @@ class SignupPage extends Component {
     signup: PropTypes.func,
     input: PropTypes.object,
     handleSubmit: PropTypes.func,
-    authenticateUserMutation: PropTypes.func
+    authenticateUserMutation: PropTypes.func,
+    navigation: PropTypes.object
   }
 
   handlePress = (values) => {
     this.props.signup(values).then((response) => {
+      const { navigate } = this.props.navigation;
+      navigate('CreateFamilyPage');
       console.log(response.data);
     }).catch(err => console.log(err));
   }
@@ -51,7 +54,14 @@ class SignupPage extends Component {
               },
             }).then(({ data }) => {
               console.log(data);
-              this._storeAuthTokensLocally(data.authenticateFacebookUser.token, token, expires);
+              const { navigate } = this.props.navigation;
+              const tokenToString = data.authenticateFacebookUser.token.toString();
+              navigate('CreateFamilyPage');
+              this._storeAuthTokensLocally(
+                tokenToString,
+                token.toString(),
+                expires.toString()
+              );
             });
           } catch (e) {
             console.log('the error is ', e);
@@ -92,8 +102,9 @@ class SignupPage extends Component {
     const { handleSubmit } = this.props;
     return (
       <View style={styles.container}>
-        <View >
-           <Text>Sign up with </Text><TouchableHighlight
+        <Text>Sign up with </Text>
+        <View style={styles.socialMediaSectionStyles}>
+           <TouchableHighlight
            onPress={this._handleFacebookLogin}>
            <Text style={styles.linkStyle}> Facebook </Text>
            </TouchableHighlight>
@@ -105,17 +116,19 @@ class SignupPage extends Component {
         </Text>
           <Icon
             name="user-plus"
-            size={40} color="#b24f60"
+            size={40}
+            style={styles.iconStyle}
+            color="#b24f60"
           />
           <Field
             name="firstName"
             component={RenderInput}
-            label="Firstname"
+            label="First Name"
           />
           <Field
             name="lastName"
             component={RenderInput}
-            label="Lastname"
+            label="Last Name"
           />
           <Field
             name="email"

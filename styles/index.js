@@ -1,5 +1,6 @@
 export {
   landingStyles,
   signupStyles,
-  textfieldStyles
+  textfieldStyles,
+  createFamilyStyles
 } from './styles';
