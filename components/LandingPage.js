@@ -23,6 +23,10 @@ class LandingPage extends Component {
     navigate('LoginPage');
   }
 
+  handleTest = () => {
+    const { navigate } = this.props.navigation;
+    navigate('CreateFamilyPage');
+  }
 
   render() {
     return (
@@ -47,6 +51,17 @@ class LandingPage extends Component {
             testID="LoginPage"
           >
             LOGIN
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={this.handleTest}
+          style={styles.create}
+        >
+          <Text
+            style={styles.buttonText}
+            testID="CreateFamilyPage"
+          >
+            TEST CREATE FAMILY
           </Text>
         </TouchableHighlight>
       </View>
