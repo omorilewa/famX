@@ -1,166 +1,97 @@
-
 import React, { Component } from 'react';
 import {
-  Text,
   View,
-  TouchableHighlight,
+  Text,
+  Picker,
 } from 'react-native';
-import { graphql, compose } from 'react-apollo';
-import gql from 'graphql-tag';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-import PropTypes from 'prop-types';
-import { reduxForm, Field } from 'redux-form';
-import InputField from './InputField';
+import {
+  Container,
+  Button,
+  Input,
+  Content,
+  Form,
+  Icon,
+  Item as FormItem,
+} from 'native-base';
 import { createFamilyStyles as styles } from '../styles';
-import { validate } from '../utils';
 
-class CreateFamilyPage extends Component {
-  static navigationOptions = {
-    title: 'Create Family',
-  };
-  static propTypes = {
-    signup: PropTypes.func,
-    input: PropTypes.object,
-    handleSubmit: PropTypes.func,
-    authenticateUserMutation: PropTypes.func
-  }
+export default class CreateFamilyPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      valueSelected: 'Blue'
 
-  handlePress = (values) => {
-    this.props.signup(values).then((response) => {
-      console.log(response.data);
-    }).catch(err => console.log(err));
+    };
   }
   render() {
-    const { handleSubmit } = this.props;
     return (
-      <View style={styles.container}>
-        <TouchableHighlight
-            style={styles.buttonStyle}
-            onPress={handleSubmit(this.handlePress)}
-        >
-          <Text style={{ color: '#fff' }}>
-            CREATE FAMILY HERE
-          </Text>
-        </TouchableHighlight>
-          <Field
-            name="familyName"
-            component={InputField}
-            label="Enter the name of your family or an alias"
-          />
-        <TouchableHighlight
-            style={styles.buttonStyle}
-            onPress={handleSubmit(this.handlePress)}
-        >
-          <Text style={{ color: '#fff' }}>
-            ADD MEMBERS TO THE FAMILY
-          </Text>
-        </TouchableHighlight>
-        <View style={styles.inlineView}>
-          <Field
-            name="lastName"
-            component={InputField}
-            label="Enter e-mail adress"
-          />
-          <Field
-            name="email"
-            component={InputField}
-            label="E-mail"
-          />
-          </View>
-          <Field
-            name="password"
-            component={InputField}
-            label="Password"
-          />
-          <Field
-            name="passwordConfirm"
-            component={InputField}
-            label="Confirm Password"
-          />
-          <Field
-            name="phoneNum"
-            component={InputField}
-            label="Phone Number"
-          />
-          <TouchableHighlight
-            style={styles.buttonStyle}
-            onPress={handleSubmit(this.handlePress)}
-          >
-            <Text style={{ color: '#fff' }}>
-              SUBMIT DETAILS
-            </Text>
-          </TouchableHighlight>
-          </View>
+      <Container>
+      <Content contentContainerStyle={{ flex: 1 }} style={{ padding: 10 }}>
+          <Form>
+            <Button block>
+              <Text>CREATE YOUR FAMILY</Text>
+            </Button>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <FormItem style={{ width: '70%' }}>
+                <Input
+                style={styles.inputStyle}
+                placeholder='Enter the family name' />
+              </FormItem>
+            </View>
+            <Button style={styles.buttonStyle} block>
+              <Text style={{ color: '#fff' }}> ADD MEMBERS TO THE FAMILY</Text>
+            </Button>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <FormItem style={{ width: '70%' }}>
+                <Input
+                style={styles.inputStyle}
+                placeholder='Enter e-mail here' />
+              </FormItem>
+            </View>
+            <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <Picker
+                style={{
+                  width: '70%',
+                  alignSelf: 'center'
+                }}
+                selectedValue={this.state.valueSelected}
+                onValueChange={(itemValue) => {
+                  this.setState({ valueSelected: itemValue });
+                }}
+                mode={'dropdown'}
+                enabled
+              >
+                <Picker.Item label='Select the role ...' value='Role-select'/>
+                <Picker.Item label='dad' value='dad'/>
+                <Picker.Item label='mum' value='mum'/>
+                <Picker.Item label='child' value='child'/>
+              </Picker>
+            </View>
+            <FormItem
+              style={styles.smallButtonStyle}
+            >
+              <Button transparent bordered>
+                <Text>Send Invite</Text>
+                <Icon name='arrow-round-forward'/>
+              </Button>
+            </FormItem>
+            <Button block>
+              <Text>INVITE STATUS</Text>
+            </Button>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flex: .5 }}>
+                <Text>Placeholder</Text>
+              </View>
+              <View style={{ flex: .5 }}>
+                <Picker>
+                  <Picker.Item label="Java" value="java"/>
+                  <Picker.Item label="JavaScript" value="js"/>
+                </Picker>
+              </View>
+            </View>
+         </Form>
+        </Content>
+      </Container>
     );
   }
 }
-
-const SIGNUP_MUTATION = gql`
-  mutation createUser(
-    $firstName: String!,
-    $lastName : String!,
-    $email: String!,
-    $password: String!,
-    $passwordConfirm: String!,
-    $phoneNum: String!
-  ){
-    createUser(
-      firstName: $firstName,
-      lastName: $lastName,
-      email: $email,
-      password: $password,
-      passwordConfirm: $passwordConfirm,
-      phoneNum: $phoneNum) {
-        firstName
-        email
-    }
-  }
-`;
-
-const AUTH_FB_USER = gql`
-mutation AuthenticateUserMutation($facebookToken: String!) {
-  authenticateFacebookUser(facebookToken: $facebookToken) {
-    token
-  }
-}`;
-
-const LOGGED_IN_USER = gql`
-query LoggedInUser {
-  loggedInUser {
-    id
-  }
-}`;
-
-const SignupWithData = graphql(SIGNUP_MUTATION, {
-  props: ({ mutate }) => ({
-    signup: ({
-      firstName,
-      lastName,
-      email,
-      password,
-      passwordConfirm,
-      phoneNum
-    }) => mutate({
-      variables: {
-        firstName,
-        lastName,
-        email,
-        password,
-        passwordConfirm,
-        phoneNum
-      }
-    }),
-  }),
-})(CreateFamilyPage);
-
-const SignupForm = reduxForm({
-  form: 'signup',
-  validate,
-})(SignupWithData);
-
-const SignupWithMutation = compose(
-  graphql(AUTH_FB_USER, { name: 'authenticateUserMutation' }),
-  graphql(LOGGED_IN_USER, { options: { fetchPolicy: 'network-only' } })
-)(SignupForm);
-
-export default SignupWithMutation;
