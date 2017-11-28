@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import {
   Text,
