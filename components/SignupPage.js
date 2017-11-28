@@ -28,18 +28,31 @@ class SignupPage extends Component {
     input: PropTypes.object,
     handleSubmit: PropTypes.func,
     authenticateUserMutation: PropTypes.func,
+    signupUserMutation: PropTypes.func,
     navigation: PropTypes.object
   }
 
-  handlePress = (values) => {
-    this.props.signup(values).then((response) => {
+  handlePress = async (values) => {
+    const {
+      firstName, lastName, email, password, passwordConfirm, phoneNum
+    } = values;
+    console.log(email, password);
+    try {
+      const response = await this.props.signupUserMutation({
+        variables: {
+          firstName, lastName, email, password, passwordConfirm, phoneNum
+        }
+      });
       const { navigate } = this.props.navigation;
-      navigate('CreateFamilyPage');
-      console.log(response.data);
-    }).catch(err => console.log(err));
+      const tokenToString = response.data.signupUser.token.toString();
+      this.storeAuthTokensLocally(tokenToString);
+      // Did not destructure because the variable name firstName exists
+      navigate('CreateFamilyPage', { name: response.data.signupUser.firstName });
+    } catch (e) {
+      console.error('An error occurred: ', e);
+    }
   }
-
-  _handleFacebookLogin = async () => {
+  handleFacebookLogin = async () => {
     try {
       const { type, token, expires } = await Facebook.logInWithReadPermissionsAsync(
         '641679006221114',
@@ -57,7 +70,7 @@ class SignupPage extends Component {
               const { navigate } = this.props.navigation;
               const tokenToString = data.authenticateFacebookUser.token.toString();
               navigate('CreateFamilyPage');
-              this._storeAuthTokensLocally(
+              this.storeAuthTokensLocally(
                 tokenToString,
                 token.toString(),
                 expires.toString()
@@ -92,7 +105,7 @@ class SignupPage extends Component {
     }
   };
 
-  _storeAuthTokensLocally = async (graphcoolToken, socialLoginToken, socialLoginValidity) => {
+  storeAuthTokensLocally = async (graphcoolToken, socialLoginToken, socialLoginValidity) => {
     await AsyncStorage.setItem('graphcoolToken', graphcoolToken);
     await AsyncStorage.setItem('socialLoginToken', socialLoginToken);
     await AsyncStorage.setItem('socialLoginValidity', socialLoginValidity);
@@ -105,7 +118,7 @@ class SignupPage extends Component {
         <Text>Sign up with </Text>
         <View style={styles.socialMediaSectionStyles}>
            <TouchableHighlight
-           onPress={this._handleFacebookLogin}>
+           onPress={this.handleFacebookLogin}>
            <Text style={styles.linkStyle}> Facebook </Text>
            </TouchableHighlight>
            <Text>or</Text>
@@ -164,7 +177,7 @@ class SignupPage extends Component {
 }
 
 const SIGNUP_MUTATION = gql`
-  mutation createUser(
+  mutation SignupUser(
     $firstName: String!,
     $lastName : String!,
     $email: String!,
@@ -172,15 +185,15 @@ const SIGNUP_MUTATION = gql`
     $passwordConfirm: String!,
     $phoneNum: String!
   ){
-    createUser(
+    signupUser(
       firstName: $firstName,
       lastName: $lastName,
       email: $email,
       password: $password,
       passwordConfirm: $passwordConfirm,
       phoneNum: $phoneNum) {
+        token
         firstName
-        email
     }
   }
 `;
@@ -199,34 +212,13 @@ query LoggedInUser {
   }
 }`;
 
-const SignupWithData = graphql(SIGNUP_MUTATION, {
-  props: ({ mutate }) => ({
-    signup: ({
-      firstName,
-      lastName,
-      email,
-      password,
-      passwordConfirm,
-      phoneNum
-    }) => mutate({
-      variables: {
-        firstName,
-        lastName,
-        email,
-        password,
-        passwordConfirm,
-        phoneNum
-      }
-    }),
-  }),
-})(SignupPage);
-
 const SignupForm = reduxForm({
   form: 'signup',
   validate,
-})(SignupWithData);
+})(SignupPage);
 
 const SignupWithMutation = compose(
+  graphql(SIGNUP_MUTATION, { name: 'signupUserMutation' }),
   graphql(AUTH_FB_USER, { name: 'authenticateUserMutation' }),
   graphql(LOGGED_IN_USER, { options: { fetchPolicy: 'network-only' } })
 )(SignupForm);
