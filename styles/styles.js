@@ -149,6 +149,10 @@ export const createFamilyStyles = StyleSheet.create({
   },
   smallButtonStyle: {
     marginTop: '9%',
+    width: '40%',
+    borderWidth: 3,
+    borderColor: 'blue',
+    backgroundColor: 'transparent'
   },
   linkStyle: {
     color: '#670A0A',
@@ -162,6 +166,9 @@ export const createFamilyStyles = StyleSheet.create({
   labelStyle: {
     fontWeight: 'bold',
     fontSize: 13
+  },
+  buttonIconStyle: {
+    color: 'blue'
   }
 });
 

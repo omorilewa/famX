@@ -17,7 +17,7 @@ const BlockButton = (props) => {
 };
 
 BlockButton.propTypes = {
-  buttonText: PropTypes.string.isRequired
+  buttonText: PropTypes.string.isRequired,
 };
 
 export default BlockButton;
