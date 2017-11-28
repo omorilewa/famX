@@ -45,14 +45,14 @@ class SignupPage extends Component {
       });
       const { navigate } = this.props.navigation;
       const tokenToString = response.data.signupUser.token.toString();
-      this._storeAuthTokensLocally(tokenToString);
+      this.storeAuthTokensLocally(tokenToString);
       // Did not destructure because the variable name firstName exists
       navigate('CreateFamilyPage', { name: response.data.signupUser.firstName });
     } catch (e) {
       console.error('An error occurred: ', e);
     }
   }
-  _handleFacebookLogin = async () => {
+  handleFacebookLogin = async () => {
     try {
       const { type, token, expires } = await Facebook.logInWithReadPermissionsAsync(
         '641679006221114',
@@ -70,7 +70,7 @@ class SignupPage extends Component {
               const { navigate } = this.props.navigation;
               const tokenToString = data.authenticateFacebookUser.token.toString();
               navigate('CreateFamilyPage');
-              this._storeAuthTokensLocally(
+              this.storeAuthTokensLocally(
                 tokenToString,
                 token.toString(),
                 expires.toString()
@@ -105,7 +105,7 @@ class SignupPage extends Component {
     }
   };
 
-  _storeAuthTokensLocally = async (graphcoolToken, socialLoginToken, socialLoginValidity) => {
+  storeAuthTokensLocally = async (graphcoolToken, socialLoginToken, socialLoginValidity) => {
     await AsyncStorage.setItem('graphcoolToken', graphcoolToken);
     await AsyncStorage.setItem('socialLoginToken', socialLoginToken);
     await AsyncStorage.setItem('socialLoginValidity', socialLoginValidity);
@@ -118,7 +118,7 @@ class SignupPage extends Component {
         <Text>Sign up with </Text>
         <View style={styles.socialMediaSectionStyles}>
            <TouchableHighlight
-           onPress={this._handleFacebookLogin}>
+           onPress={this.handleFacebookLogin}>
            <Text style={styles.linkStyle}> Facebook </Text>
            </TouchableHighlight>
            <Text>or</Text>

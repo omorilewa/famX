@@ -35,14 +35,14 @@ class LoginPage extends Component {
         this.props.authenticateUserMutation({ variables: { email, password } });
       const { navigate } = this.props.navigation;
       const tokenToString = response.data.authenticateUser.token.toString();
-      this._storeAuthTokensLocally(tokenToString);
+      this.storeAuthTokensLocally(tokenToString);
       navigate('CreateFamilyPage');
     } catch (e) {
       console.error('An error occurred: ', e);
     }
   }
 
-  _storeAuthTokensLocally = async (graphcoolToken) => {
+  storeAuthTokensLocally = async (graphcoolToken) => {
     await AsyncStorage.setItem('graphcoolToken', graphcoolToken);
   }
 
