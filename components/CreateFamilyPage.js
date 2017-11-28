@@ -1,11 +1,10 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
-import nodemailer from 'nodemailer';
 import validator from 'validator';
 import {
   View,
   Text,
   Picker,
-  TextInput
 } from 'react-native';
 import {
   Container,
@@ -16,6 +15,7 @@ import {
   Icon,
   Item as FormItem,
 } from 'native-base';
+import BlockButton from './BlockButton';
 import { createFamilyStyles as styles } from '../styles';
 
 export default class CreateFamilyPage extends Component {
@@ -63,9 +63,9 @@ export default class CreateFamilyPage extends Component {
           style={styles.contentStyle}
         >
           <Form>
-            <Button style={styles.buttonStyle} block>
-              <Text>CREATE YOUR FAMILY</Text>
-            </Button>
+            <BlockButton
+              buttonText="CREATE FAMILY"
+            />
             <View style={styles.contentViewStyle}>
               <FormItem style={styles.formWidth}>
                 <Input
@@ -76,12 +76,12 @@ export default class CreateFamilyPage extends Component {
                 />
               </FormItem>
             </View>
-            <Button style={styles.buttonStyle} block>
-              <Text> ADD MEMBERS TO THE FAMILY</Text>
-            </Button>
+            <BlockButton
+              buttonText="ADD MEMBER TO FAMILY"
+            />
             <View style={styles.contentViewStyle}>
               <FormItem style={styles.formWidth}>
-                <TextInput
+                <Input
                   onChangeText={this.handleEmailChange}
                   placeholder='Enter e-mail here'
                   style={styles.inputStyle}
