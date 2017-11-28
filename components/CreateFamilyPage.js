@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import nodemailer from 'nodemailer';
+import validator from 'validator';
 import {
   View,
   Text,
   Picker,
+  TextInput
 } from 'react-native';
 import {
   Container,
@@ -22,10 +25,36 @@ export default class CreateFamilyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      valueSelected: 'Blue'
-
+      valueSelected: '',
+      email: '',
+      familyName: ''
     };
   }
+
+  handleEmailChange = (newValue) => {
+    this.setState({ email: newValue });
+  }
+
+  handleFamilyChange = (newValue) => {
+    this.setState({ familyName: newValue });
+  }
+
+  handlePicker = (selectValue) => {
+    this.setState({ valueSelected: selectValue });
+  }
+
+  handlePress = () => {
+    const { email, familyName, valueSelected } = this.state;
+    const emailSupplied = validator.isEmail(email);
+    const familyNameSupplied = !validator.isEmpty(familyName);
+    const rolePicked = !validator.equals('Select the role ...', valueSelected);
+    if (emailSupplied && familyNameSupplied && rolePicked) {
+      console.log(this.state.email, '===', this.state.familyName);
+    } else {
+      console.log('Have you chosen a family name, an email and selected a role?');
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -40,8 +69,11 @@ export default class CreateFamilyPage extends Component {
             <View style={styles.contentViewStyle}>
               <FormItem style={styles.formWidth}>
                 <Input
+                  onChangeText={this.handleFamilyChange}
+                  placeholder='Enter the family name'
                   style={styles.inputStyle}
-                  placeholder='Enter the family name' />
+                  value={this.state.familyName}
+                />
               </FormItem>
             </View>
             <Button style={styles.buttonStyle} block>
@@ -49,9 +81,11 @@ export default class CreateFamilyPage extends Component {
             </Button>
             <View style={styles.contentViewStyle}>
               <FormItem style={styles.formWidth}>
-                <Input
-                  style={styles.inputStyle}
+                <TextInput
+                  onChangeText={this.handleEmailChange}
                   placeholder='Enter e-mail here'
+                  style={styles.inputStyle}
+                  value={this.state.email}
                 />
               </FormItem>
             </View>
@@ -59,9 +93,7 @@ export default class CreateFamilyPage extends Component {
               <Picker
                 style={styles.pickerStyle}
                 selectedValue={this.state.valueSelected}
-                onValueChange={(itemValue) => {
-                  this.setState({ valueSelected: itemValue });
-                }}
+                onValueChange={this.handlePicker}
                 mode={'dropdown'}
                 enabled
               >
@@ -74,7 +106,11 @@ export default class CreateFamilyPage extends Component {
             <FormItem
               style={styles.smallButtonStyle}
             >
-              <Button transparent bordered>
+              <Button
+                transparent
+                bordered
+                onPress={this.handlePress}
+              >
                 <Text>Send Invite</Text>
                 <Icon name='arrow-round-forward'/>
               </Button>
