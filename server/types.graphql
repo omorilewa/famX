@@ -16,7 +16,7 @@
    facebookUserId: String @isUnique
    password: String
    phoneNum: String
-   email: String @isUnique # optional, because it's obtained from Facebook API
+   email: String @isUnique
  }
 
 
