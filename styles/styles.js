@@ -140,7 +140,6 @@ export const createFamilyStyles = StyleSheet.create({
   },
   inputStyleFam: {
     minHeight: 23,
-    fontSize: 10,
     width: '100%',
   },
   buttonStyle: {
