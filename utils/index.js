@@ -1,1 +1,1 @@
-export { validate } from './validateInput';
+export { validate, validateFamilyFields } from './validateInput';
