@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { createFamilyStyles as styles } from '../styles';
 
 const BlockButton = (props) => {
-  const { buttonText, iconName } = props;
+  const { buttonText, iconName, onPress } = props;
 
   let blockButtonStyle;
   if (props.smallButton) {
@@ -18,6 +18,7 @@ const BlockButton = (props) => {
     <Button
       block
       style={blockButtonStyle}
+      onPress={onPress}
     >
       <Icon
         name={iconName}
@@ -30,8 +31,9 @@ const BlockButton = (props) => {
 
 BlockButton.propTypes = {
   buttonText: PropTypes.string.isRequired,
-  iconName: PropTypes.string,
+  iconName: PropTypes.string.isRequired,
   smallButton: PropTypes.bool,
+  onPress: PropTypes.func
 };
 
 export default BlockButton;
