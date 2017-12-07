@@ -47,6 +47,7 @@ const Nav = StackNavigator({
 });
 
 export default class App extends Component {
+  /* eslint-disable global-require */
   async componentWillMount() {
     await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
