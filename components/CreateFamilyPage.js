@@ -9,7 +9,7 @@ import DropDown from './DropDown';
 import IconButton from './IconButton';
 import InputField from './InputField';
 import { createFamilyStyles as styles } from '../styles';
-import { validateFamilyFields } from '../utils';
+import { validateFamilyFields, emailModule } from '../utils';
 
 class CreateFamilyForm extends Component {
   static navigationOptions = {
@@ -21,6 +21,7 @@ class CreateFamilyForm extends Component {
   }
 
   handlePress = (values) => {
+    emailModule(values);
     console.log('stringified', values);
   }
 
